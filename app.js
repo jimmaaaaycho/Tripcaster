@@ -7,7 +7,6 @@ import {
   Image,
   Linking,
   Alert,
-  Button,
   TextInput,
   AppRegistry
 } from 'react-native';
@@ -16,6 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SafariView from 'react-native-safari-view';
 import secrets from './secrets'
 import Podcast from './screens/Podcast';
+import { Button, FormLabel, FormInput } from 'react-native-elements'
 
 export default class App extends React.Component {
  
@@ -211,52 +211,83 @@ export default class App extends React.Component {
     <View style={styles.container}>
         { user
           ? // Show user info if already logged in
-          <View style={styles.homeContainer}>
-            <View style={styles.row}>
-                <Text style={styles.label}>
-                    Current Location:
-                </Text>
-                <TextInput 
-                    style={styles.textInput}
-                    onChangeText={this.enterLocation.bind(this)}
-                >
-                </TextInput>
-            </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>
-                    Destination:
-                </Text>
-                <TextInput 
-                    style={styles.textInput}
-                    onChangeText={this.enterDestination.bind(this)}
-                >
-                </TextInput>
-            </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>
-                    What topic are you interested in?
-                </Text>
-                <TextInput 
-                    style={styles.textInput}
-                    onChangeText={this.enterSearch.bind(this)}
-                >
-                </TextInput>
-            </View>
-            <Icon.Button
-                className = "submit_button"
-                onPress={this._onPressButton.bind(this)}
+          // <View style={styles.homeContainer}>
+          //   <View style={styles.row}>
+          //       <Text style={styles.label}>
+          //           Current Location:
+          //       </Text>
+          //       <TextInput 
+          //           style={styles.textInput}
+          //           onChangeText={this.enterLocation.bind(this)}
+          //       >
+          //       </TextInput>
+          //   </View>
+          //   <View style={styles.row}>
+          //       <Text style={styles.label}>
+          //           Destination:
+          //       </Text>
+          //       <TextInput 
+          //           style={styles.textInput}
+          //           onChangeText={this.enterDestination.bind(this)}
+          //       >
+          //       </TextInput>
+          //   </View>
+          //   <View style={styles.row}>
+          //       <Text style={styles.label}>
+          //           What topic are you interested in?
+          //       </Text>
+          //       <TextInput 
+          //           style={styles.textInput}
+          //           onChangeText={this.enterSearch.bind(this)}
+          //       >
+          //       </TextInput>
+          //   </View>
+          //   <Button
+          //       className = "submit_button"
+          //       onPress={this._onPressButton.bind(this)}
                 
-                title="Submit for ListenNotes Response"
-                accessibilityLabel="Press this button to get episodes for your commute">
-                Submit for Listen Notes
-            </Icon.Button>
-            <Icon.Button
-                className = "submit_button"
+          //       title="Submit for ListenNotes Response"
+          //       accessibilityLabel="Press this button to get episodes for your commute">
+          //       Submit for Listen Notes
+          //   </Button>
+          //   <Button
+          //       className = "submit_button"
+          //       onPress={this.otherPressButton.bind(this)}
+          //       title="Submit for Maps Response"
+          //       accessibilityLabel="Press this button to get episodes for your commute">
+          //       Submit for Maps
+          //   </Button>
+          // </View>
+          <View>
+              <View>
+                  <FormLabel>Current Location:</FormLabel>
+                  <FormInput onChangeText={this.enterLocation.bind(this)}/>
+              </View>
+
+              <View>
+                  <FormLabel>Destination:</FormLabel>
+                  <FormInput onChangeText={this.enterDestination.bind(this)}/>
+              </View>
+
+              <View>
+                  <FormLabel>Interested Topic:</FormLabel>
+                  <FormInput onChangeText={this.enterSearch.bind(this)}/>
+              </View>
+
+              <Button
+                title='Listen Notes'
+                backgroundColor='#3b5998'
+                onPress={this._onPressButton.bind(this)}
+                large
+                style={styles.Button}/>
+
+              <Button
+                title='Maps'
+                backgroundColor='#3b5998'
                 onPress={this.otherPressButton.bind(this)}
-                title="Submit for Maps Response"
-                accessibilityLabel="Press this button to get episodes for your commute">
-                Submit for Maps
-            </Icon.Button>
+                large
+                style={styles.Button}
+                />
           </View>
           : // Show Please log in message if not
             <View style={styles.content}>
@@ -302,6 +333,9 @@ const iconStyles = {
 };
 
 const styles = StyleSheet.create({
+  Button : {
+    paddingVertical: 10
+  },
   homeContainer: {
       flex: 1,
       justifyContent: 'center',
