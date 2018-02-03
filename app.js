@@ -36,6 +36,7 @@ export default class App extends React.Component {
     destination: '',
     searchQuery: '',
     listenNotesURL: 'https://listennotes.p.mashape.com/api/v1/search?offset=&',
+    commuteTime: 0,
     len_min: 10,
     len_max: 50,
     offset: 0,
@@ -100,8 +101,9 @@ export default class App extends React.Component {
 
   podcastSearchURL = `${this.state.listenNotesURL}`
 
-  _onPressButton() {
-
+  async _onPressButton() {
+      const commuteTime = await this.fetchCommuteTime();
+      console.log(commuteTime)
       const params = {
           offset: this.state.offset,
           len_min: this.state.len_min,
@@ -141,43 +143,9 @@ export default class App extends React.Component {
 
   };
 
-  otherPressButton() {
-      // this.props.navigation.navigate('Maps');
-      var origin1 = new google.maps.LatLng(55.930385, -3.118425);
-      var origin2 = 'Greenwich, England';
-      var destinationA = 'Stockholm, Sweden';
-      var destinationB = new google.maps.LatLng(50.087692, 14.421150);
-
-      var service = new google.maps.DistanceMatrixService();
-      service.getDistanceMatrix(
-          {
-              origins: [this.state.currentLocation],
-              destinations: [this.state.destination],
-              travelMode: this.state.travelMode,
-          }, callback);
-
-      function callback(response, status) {
-      //The DistanceMatrixResponse object contains one row for each origin 
-      //that was passed in the request. Each row contains an element field 
-      //for each pairing of that origin with the provided destination(s).
-          if (status == 'OK') {
-              var origins = response.originAddresses;
-              var destinations = response.destinationAddresses;
-
-          for (var i = 0; i < origins.length; i++) {
-              var results = response.rows[i].elements;
-              for (var j = 0; j < results.length; j++) {
-                  var element = results[j];
-                  var distance = element.distance.text;
-                  var duration = element.duration.text;
-                  var from = origins[i];
-                  var to = destinations[j];
-                  }
-              }
-              console.log(results)
-          }
-
-      }
+  fetchCommuteTime() {
+      fetch('http://localhost:3000/api/commute')
+      .then(res => res.json())
   };
 
   enterText(value) {
