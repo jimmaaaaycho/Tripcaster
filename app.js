@@ -126,6 +126,7 @@ export default class App extends React.Component {
               'X-Mashape-Key': secrets.podcasts
           }
       })
+      .then(res => res.text())
       .then(res => {
           // console.log(res);
           // console.log(JSON.parse(res._bodyText));
@@ -134,7 +135,7 @@ export default class App extends React.Component {
           // for (var i = 0; i<9;i++) {
           //   titles[i] = JSON.parse(res._bodyText).results[i].podcast_title_original;
           // }
-          this.props.navigation.navigate('Second', {title: JSON.parse(res._bodyText)});
+          this.props.navigation.navigate('Second', {title: JSON.parse(res)});
           // console.log(titles);
           // return res.json();
       })
@@ -148,12 +149,14 @@ export default class App extends React.Component {
   fetchCommuteTime() {
       fetch('http://localhost:3000/api/commute')
       // .then(res => res.json())
-      .then(res => { const _bodyText = JSON.parse(res._bodyText)
-      this.state.duration_text = res._bodyText.duration_text;
-      this.state.duration = res._bodyText.duration;
+      .then(res => res.text())
+      .then(res => {
+        console.log("RES : " ,res);
+      this.state.duration_text = res.duration_text;
+      this.state.duration = res.duration;
       this.setState(this.state);
-      })
-      // this.setState({duration_text: res._bodyText.duration_text, duration:res._bodyText.duration});
+      })  
+          // this.setState({duration_text: res._bodyText.duration_text, duration:res._bodyText.duration});
       .catch((error) => {
           console.log('Error', error); // no error is returned
           throw error;
