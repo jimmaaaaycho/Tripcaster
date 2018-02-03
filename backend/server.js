@@ -1,9 +1,22 @@
+/*Import Modules and its dependencies*/
+require('babel-register')
+require('babel-polyfill')
+require('./server')
+
 import express from 'express';
 import passport from 'passport';
 import FacebookStrategy from 'passport-facebook';
 import GoogleStrategy from 'passport-google-oauth20';
+import dbConfig from './server/config/db';
+import middlewareConfig from './server/config/middleware';
+import { PodcastRoutes, MapRoutes } from './server/modules'
+
 // Import Facebook and Google OAuth apps configs
-import { facebook, google } from './config';
+import { facebook, google } from './server/config/config';
+
+/*Set up port*/
+const PORT = process.env.PORT || 3000;
+
 
 // Transform Facebook profile because Facebook and Google profile objects look different
 // and we want to transform them into user objects that have the same set of attributes
@@ -41,6 +54,15 @@ passport.deserializeUser((user, done) => done(null, user));
 // Initialize http server
 const app = express();
 
+/*Database*/
+dbConfig();
+
+/*Middleware*/
+middlewareConfig(app);
+
+/*Module Routes*/
+app.use('/api', [PodcastRoutes, MapRoutes]);
+
 // Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -60,8 +82,11 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google' }),
   (req, res) => res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user)));
 
+
+
+
 // Launch the server on the port 3000
-const server = app.listen(3000, () => {
+const server = app.listen(PORT, () => {
   const { address, port } = server.address();
   console.log(`Listening at http://${address}:${port}`);
 });
