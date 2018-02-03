@@ -275,19 +275,11 @@ export default class App extends React.Component {
               </View>
 
               <Button
-                title='Listen Notes'
+                title='Get Results'
                 backgroundColor='#3b5998'
                 onPress={this._onPressButton.bind(this)}
                 large
                 style={styles.Button}/>
-
-              <Button
-                title='Maps'
-                backgroundColor='#3b5998'
-                onPress={this.otherPressButton.bind(this)}
-                large
-                style={styles.Button}
-                />
           </View>
           : // Show Please log in message if not
             <View style={styles.content}>
