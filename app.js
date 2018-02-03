@@ -41,7 +41,9 @@ export default class App extends React.Component {
     len_max: 50,
     offset: 0,
     text: '',
-    travelMode: 'DRIVING'
+    travelMode: 'DRIVING',
+    duration_text: '',
+    duration: ''
   };
 
 /*------------- PASSPORT LOGIN -------------*/
@@ -145,7 +147,17 @@ export default class App extends React.Component {
 
   fetchCommuteTime() {
       fetch('http://localhost:3000/api/commute')
-      .then(res => res.json())
+      // .then(res => res.json())
+      .then(res => { const _bodyText = JSON.parse(res._bodyText)
+      this.state.duration_text = res._bodyText.duration_text;
+      this.state.duration = res._bodyText.duration;
+      this.setState(this.state);
+      })
+      // this.setState({duration_text: res._bodyText.duration_text, duration:res._bodyText.duration});
+      .catch((error) => {
+          console.log('Error', error); // no error is returned
+          throw error;
+      })
   };
 
   enterText(value) {

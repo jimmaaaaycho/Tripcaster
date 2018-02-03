@@ -33,6 +33,7 @@ static navigationOptions = {
 
  render() {
     // const {navigate} = this.props.navigation;
+    console.log("PROPS : " ,this.props)
     const {results} = this.props.navigation.state.params.title
     return (  
     <ScrollView>
