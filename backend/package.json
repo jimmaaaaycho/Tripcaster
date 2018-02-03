@@ -7,7 +7,7 @@
     "start": "node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Konstantin Shkut <konstantin.shkut@gmail.com> (http://rationalappdev.com)",
+  "author": "Jimmy Cho",
   "license": "ISC",
   "dependencies": {
     "cookie-session": "^2.0.0-beta.1",
