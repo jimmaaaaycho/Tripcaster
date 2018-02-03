@@ -34,8 +34,9 @@ static navigationOptions = {
  render() {
     // const {navigate} = this.props.navigation;
     const {results} = this.props.navigation.state.params.title
-    return (
+    return (  
     <ScrollView>
+    <Text style={styles.header}>Your commute time is estimated to be {}, here are some recommendations</Text>
     {results.map(pod => (
       <TouchableOpacity>
         <List>
